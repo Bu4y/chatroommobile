@@ -36,15 +36,17 @@ angular.module('starter.controllers', [])
     };
   })
 
-  .controller('ChatDetailCtrl', function ($scope, $stateParams, Chats, roomService, Socket) {
+  .controller('ChatDetailCtrl', function ($scope, $stateParams, Chats, roomService, Socket, authenService) {
+    $scope.user = authenService.getUser();
     var roomId = $stateParams.chatId;
     roomService.getRoom(roomId).then(function (res) {
       $scope.chat = res;
     }, function (err) {
       console.log(err);
     });
-
+    Socket.connect();
     Socket.on('user2user', function (message) {
+      alert('user2user');
       $scope.messages.unshift(message);
     });
 
