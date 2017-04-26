@@ -1,0 +1,27 @@
+<ion-view view-title="Dashboard">
+  <ion-content class="padding">
+    <h2>Welcome to Ionic</h2>
+    <div ng-if="!storage">
+
+      <label class="item item-input">
+                <span class="input-label">User Name :</span>
+                <input type="text" placeholder="ชื่อผู้ใช้" ng-model = "data.username">
+    </label>
+      <label class="item item-input">
+                <span class="input-label">Password :</span>
+                <input type="password" placeholder="รหัสผ่าน" ng-model = "data.password" >
+    </label>
+      <div style="padding-right:5%;padding-left:5%;margin-top:15% ">
+
+        <button class="button button-full button-positive" ng-click="login(data)">
+                Login
+            </button>
+      </div>
+    </div>
+    <div ng-if="storage">
+      <button class="button button-full button-positive" ng-click="logout()">
+                Logout
+            </button>
+    </div>
+  </ion-content>
+</ion-view>
