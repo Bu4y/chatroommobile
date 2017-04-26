@@ -10,8 +10,10 @@
     <p>
       สมาชิก {{chat.users.length}} คน
     </p>
+    <hr>
     <div ng-repeat="m in messages">
-      <p>{{m.text}}</p>
+      <p>{{m.created | date:'dd/MM/yyyy - HH:mm:ss'}}</p>
+      <p>{{user.displayName}} {{m.text}}</p>
     </div>
   </ion-content>
 </ion-view>

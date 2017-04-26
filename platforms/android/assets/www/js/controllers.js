@@ -39,17 +39,20 @@ angular.module('starter.controllers', [])
   .controller('ChatDetailCtrl', function ($scope, $stateParams, Chats, roomService, Socket, authenService) {
     $scope.user = authenService.getUser();
     var roomId = $stateParams.chatId;
+    $scope.messages = [];
+    $scope.chat = null;
     roomService.getRoom(roomId).then(function (res) {
       $scope.chat = res;
+      
     }, function (err) {
       console.log(err);
     });
+
     Socket.connect();
-    Socket.on('user2user', function (message) {
-      alert('user2user');
+    // ทดสอบ mobile connect
+    Socket.on('mobile', function (message) {
       $scope.messages.unshift(message);
     });
-
   })
 
   .controller('AccountCtrl', function ($scope) {
