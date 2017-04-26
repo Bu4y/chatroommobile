@@ -44,19 +44,10 @@ angular.module('starter.controllers', [])
       console.log(err);
     });
 
-    Socket.on('invite', function (data) {
-      alert('invite' + JSON.stringify(message));
-      Socket.emit('join', data);
-    });
-
-    Socket.on('joinsuccess', function (data) {
-      $scope.room = data;
-      alert('joinsuccess : ' + JSON.stringify(data));
-    });
-
-    Socket.on('chatMessage', function (message) {
+    Socket.on('user2user', function (message) {
       $scope.messages.unshift(message);
     });
+
   })
 
   .controller('AccountCtrl', function ($scope) {
