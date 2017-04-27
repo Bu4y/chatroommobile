@@ -25,12 +25,22 @@ angular.module('starter.controllers', [])
   })
 
   .controller('ChatsCtrl', function ($scope, Chats, authenService, roomService) {
-    $scope.storage = authenService.getUser();
-    roomService.getrooms().then(function (res) {
-      $scope.chats = res;
-    }, function (err) {
-      console.log(err);
-    });
+    $scope.user = authenService.getUser();
+    $scope.listRoom = function () {
+      roomService.getrooms().then(function (res) {
+        $scope.chats = res;
+      }, function (err) {
+        console.log(err);
+      });
+    };
+    $scope.listRoom();
+    $scope.createRoom = function (data) {
+      roomService.createRoom(data).then(function (res) {
+        $scope.listRoom();
+      }, function (err) {
+        console.log(err);
+      });
+    };
     $scope.remove = function (chat) {
       Chats.remove(chat);
     };
@@ -41,18 +51,58 @@ angular.module('starter.controllers', [])
     var roomId = $stateParams.chatId;
     $scope.messages = [];
     $scope.chat = null;
+    Socket.connect();
+    // ทดสอบ mobile connect
+    // Socket.on('mobile', function (message) {
+    //   $scope.messages.unshift(message);
+    // });
+
     roomService.getRoom(roomId).then(function (res) {
       $scope.chat = res;
-      
+      var joindata = {
+        name: res.name,
+        type: res.type,
+        users: res.users,
+        user: res.user
+      };
+      // alert('invite : ' + JSON.stringify(data));
+      Socket.emit('join', joindata);
+      // Add an event listener to the 'invite' event
+      Socket.on('invite', function (res) {
+        var data = {
+          name: res.name,
+          type: res.type,
+          users: res.users,
+          user: res.user
+        };
+        // alert('invite : ' + JSON.stringify(data));
+        Socket.emit('join', data);
+      });
     }, function (err) {
       console.log(err);
     });
 
-    Socket.connect();
-    // ทดสอบ mobile connect
-    Socket.on('mobile', function (message) {
+
+
+    // Add an event listener to the 'joinsuccess' event
+    Socket.on('joinsuccess', function (data) {
+      $scope.room = data;
+      // alert('joinsuccess : ' + JSON.stringify(data));
+    });
+
+    // Add an event listener to the 'chatMessage' event
+    Socket.on('chatMessage', function (message) {
       $scope.messages.unshift(message);
     });
+
+    // Create a controller method for sending messages
+    $scope.sendMessage = function () {
+      $scope.room.user = $scope.user;
+      $scope.room.text = this.message;
+
+      Socket.emit('chatMessage', $scope.room);
+      this.message = '';
+    };
   })
 
   .controller('AccountCtrl', function ($scope) {

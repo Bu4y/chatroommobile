@@ -22,17 +22,17 @@ angular.module('starter.services', [])
 
     };
 
-    // this.getusers = function () {
-    //   var dfd = $q.defer();
-    //   var user = this.getUser();
-    //   $http.get('http://cyberchange.herokuapp.com/api/users').success(function (data) {
-    //     // window.localStorage.setItem("storage", JSON.stringify(data));
-    //     dfd.resolve(data);
-    //   }).error(function (err) {
-    //     dfd.reject(err);
-    //   })
-    //   return dfd.promise;
-    // }
+    this.getusers = function () {
+      var dfd = $q.defer();
+      var user = this.getUser();
+      $http.get('http://cyberchange.herokuapp.com/api/users').success(function (data) {
+        // window.localStorage.setItem("storage", JSON.stringify(data));
+        dfd.resolve(data);
+      }).error(function (err) {
+        dfd.reject(err);
+      })
+      return dfd.promise;
+    }
 
 
 
@@ -48,13 +48,23 @@ angular.module('starter.services', [])
         dfd.reject(err);
       })
       return dfd.promise;
-    }
+    };
 
     this.getRoom = function (roomId) {
       var dfd = $q.defer();
       $http.get(config.apiUrl + 'api/chatrooms/' + roomId).success(function (database) {
         dfd.resolve(database);
       });
+      return dfd.promise;
+    };
+
+    this.createRoom = function (data) {
+      var dfd = $q.defer();
+      $http.post(config.apiUrl + 'api/chatrooms', data).success(function (data) {
+        dfd.resolve(data);
+      }).error(function (err) {
+        dfd.reject(err);
+      })
       return dfd.promise;
     };
   })
@@ -70,26 +80,26 @@ angular.module('starter.services', [])
       lastText: 'You on your way?',
       face: 'img/ben.png'
     }, {
-      id: 1,
-      name: 'Max Lynx',
-      lastText: 'Hey, it\'s me',
-      face: 'img/max.png'
-    }, {
-      id: 2,
-      name: 'Adam Bradleyson',
-      lastText: 'I should buy a boat',
-      face: 'img/adam.jpg'
-    }, {
-      id: 3,
-      name: 'Perry Governor',
-      lastText: 'Look at my mukluks!',
-      face: 'img/perry.png'
-    }, {
-      id: 4,
-      name: 'Mike Harrington',
-      lastText: 'This is wicked good ice cream.',
-      face: 'img/mike.png'
-    }];
+        id: 1,
+        name: 'Max Lynx',
+        lastText: 'Hey, it\'s me',
+        face: 'img/max.png'
+      }, {
+        id: 2,
+        name: 'Adam Bradleyson',
+        lastText: 'I should buy a boat',
+        face: 'img/adam.jpg'
+      }, {
+        id: 3,
+        name: 'Perry Governor',
+        lastText: 'Look at my mukluks!',
+        face: 'img/perry.png'
+      }, {
+        id: 4,
+        name: 'Mike Harrington',
+        lastText: 'This is wicked good ice cream.',
+        face: 'img/mike.png'
+      }];
 
     return {
       all: function () {
