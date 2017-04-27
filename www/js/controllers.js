@@ -28,10 +28,8 @@ angular.module('starter.controllers', [])
     $scope.user = authenService.getUser();
     $scope.listRoom = function () {
       roomService.getrooms().then(function (res) {
-        alert('listroom');
         $scope.chats = res;
       }, function (err) {
-        alert('error' + JSON.stringify(err));
         console.log(err);
       });
     };
