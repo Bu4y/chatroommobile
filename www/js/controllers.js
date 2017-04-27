@@ -65,7 +65,11 @@ angular.module('starter.controllers', [])
 
     roomService.getRoom(roomId).then(function (res) {
       $scope.chat = res;
-      // alert('invite : ' + JSON.stringify(data));
+      res.users.forEach(function (user) {
+        if ($scope.user._id != user._id) {
+          $scope.title = user.displayName;
+        }
+      });
       Socket.emit('join', $scope.chat);
 
     }, function (err) {
@@ -115,16 +119,25 @@ angular.module('starter.controllers', [])
     };
   })
 
-  .controller('AccountCtrl', function ($scope, authenService) {
+  .controller('AccountCtrl', function ($scope, authenService, Socket, roomService) {
+    $scope.user = authenService.getUser();
     $scope.listAccount = function () {
-      authenService.getusers().then(function (res) {
-        $scope.accounts = res;
+      authenService.getusers().then(function (accounts) {
+        $scope.accounts = accounts;
       }, function (err) {
         console.log(err);
       });
     };
     $scope.listAccount();
-
+    $scope.addFriend = function (user) {
+      var data = {
+        name: $scope.user.username + '' + user.username,
+        type: 'P',
+        users: [$scope.user, user],
+        user: $scope.user
+      };
+      Socket.emit('createroom', data);
+    };
     $scope.settings = {
       enableFriends: true
     };

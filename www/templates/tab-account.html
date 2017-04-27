@@ -1,10 +1,10 @@
 <ion-view view-title="Add friend">
   <ion-content>
     <ion-list>
-      <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="account in accounts" type="item-text-wrap" href="#/tab/account/{{account._id}}">
-        <img ng-src="{{account.face}}">
-        <h2>{{account.name}}</h2>
-        <p>{{account.lastText}}</p>
+      <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="account in accounts | filter: {_id : '!'+user._id}"
+        type="item-text-wrap" ng-click="addFriend(account)" href="#/tab/chats">
+        <img ng-src="{{account.profileImageURL}}">
+        <h2>{{account.displayName}}</h2>
         <i class="icon ion-chevron-right icon-accessory"></i>
 
         <!--<ion-option-button class="button-assertive" ng-click="remove(chat)">

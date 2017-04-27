@@ -118,8 +118,10 @@ angular.module('starter.controllers', [])
   .controller('AccountCtrl', function ($scope, authenService) {
     $scope.listAccount = function () {
       authenService.getusers().then(function (res) {
+        alert('success');
         $scope.accounts = res;
       }, function (err) {
+        alert('error : ' + JSON.stringify(err));
         console.log(err);
       });
     };

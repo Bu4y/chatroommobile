@@ -25,7 +25,7 @@ angular.module('starter.services', [])
     this.getusers = function () {
       var dfd = $q.defer();
       var user = this.getUser();
-      $http.get('http://cyberchange.herokuapp.com/api/users').success(function (data) {
+      $http.get(config.apiUrl + 'api/users').success(function (data) {
         // window.localStorage.setItem("storage", JSON.stringify(data));
         dfd.resolve(data);
       }).error(function (err) {

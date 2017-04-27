@@ -2,9 +2,9 @@
   <ion-content>
     <ion-list>
       <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="chat in chats | filter: { users : { _id : user._id } }"
-        type="item-text-wrap" href="#/tab/chats/{{chat._id}}">
-        <img ng-src="{{chat.face}}">
-        <h2>{{chat.name}}</h2>
+         type="item-text-wrap" href="#/tab/chats/{{chat._id}}">
+        <img ng-repeat="user in chat.users | filter: { _id : '!' + user._id}" ng-src="{{user.profileImageURL}}">
+        <h2 ng-repeat="user in chat.users | filter: { _id : '!' + user._id}">{{user.displayName}}</h2>
         <p>{{chat.lastText}}</p>
         <i class="icon ion-chevron-right icon-accessory"></i>
 
