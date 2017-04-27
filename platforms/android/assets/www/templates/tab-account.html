@@ -1,9 +1,16 @@
-<ion-view view-title="Account">
+<ion-view view-title="Add friend">
   <ion-content>
     <ion-list>
-    <ion-toggle  ng-model="settings.enableFriends">
-        Enable Friends
-    </ion-toggle>
+      <ion-item class="item-remove-animate item-avatar item-icon-right" ng-repeat="account in accounts" type="item-text-wrap" href="#/tab/account/{{account._id}}">
+        <img ng-src="{{account.face}}">
+        <h2>{{account.name}}</h2>
+        <p>{{account.lastText}}</p>
+        <i class="icon ion-chevron-right icon-accessory"></i>
+
+        <!--<ion-option-button class="button-assertive" ng-click="remove(chat)">
+          Delete
+        </ion-option-button>-->
+      </ion-item>
     </ion-list>
   </ion-content>
 </ion-view>

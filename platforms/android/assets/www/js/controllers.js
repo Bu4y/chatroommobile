@@ -67,22 +67,22 @@ angular.module('starter.controllers', [])
       };
       // alert('invite : ' + JSON.stringify(data));
       Socket.emit('join', joindata);
-      // Add an event listener to the 'invite' event
-      Socket.on('invite', function (res) {
-        var data = {
-          name: res.name,
-          type: res.type,
-          users: res.users,
-          user: res.user
-        };
-        // alert('invite : ' + JSON.stringify(data));
-        Socket.emit('join', data);
-      });
+
     }, function (err) {
       console.log(err);
     });
 
-
+    // Add an event listener to the 'invite' event
+    Socket.on('invite', function (res) {
+      var data = {
+        name: res.name,
+        type: res.type,
+        users: res.users,
+        user: res.user
+      };
+      // alert('invite : ' + JSON.stringify(data));
+      Socket.emit('join', data);
+    });
 
     // Add an event listener to the 'joinsuccess' event
     Socket.on('joinsuccess', function (data) {
@@ -105,7 +105,16 @@ angular.module('starter.controllers', [])
     };
   })
 
-  .controller('AccountCtrl', function ($scope) {
+  .controller('AccountCtrl', function ($scope, authenService) {
+    $scope.listAccount = function () {
+      authenService.getusers().then(function (res) {
+        $scope.accounts = res;
+      }, function (err) {
+        console.log(err);
+      });
+    };
+    $scope.listAccount();
+
     $scope.settings = {
       enableFriends: true
     };
