@@ -41,7 +41,8 @@ angular.module('starter.services', [])
   .service('roomService', function ($http, $q, config) {
     this.getrooms = function () {
       var dfd = $q.defer();
-      $http.get(config.apiUrl + 'api/chatrooms').success(function (data) {
+      var user = (window.localStorage.user) ? JSON.parse(window.localStorage.user) : null;
+      $http.get(config.apiUrl + 'api/chatrooms', user).success(function (data) {
         // window.localStorage.setItem("storage", JSON.stringify(data));
         dfd.resolve(data);
       }).error(function (err) {

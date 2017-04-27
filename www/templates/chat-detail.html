@@ -19,7 +19,7 @@
                 send
             </button>
     <hr>
-    <div ng-repeat="m in messages">
+    <div ng-repeat="m in room.messages">
       <p>{{m.created | date:'dd/MM/yyyy - HH:mm:ss'}}</p>
       <p>{{m.user.displayName}} {{m.text}}</p>
     </div>

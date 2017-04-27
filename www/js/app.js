@@ -24,7 +24,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
   })
 
   .constant('config', {
-    apiUrl: 'https://cyberchange.herokuapp.com/' //for heroku
+    apiUrl: 'https://thamapptest.herokuapp.com/' //for heroku
+    // apiUrl: 'https://cyberchange.herokuapp.com/' //for heroku
     // apiUrl: 'http://localhost:3000/'  //for local
   })
 
